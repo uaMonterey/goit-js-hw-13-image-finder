@@ -1,4 +1,5 @@
 import './styles.css';
+
 import imagesList from './templates/imagesList.hbs';
 import ImagesApiService from './js/apiService';
 import LoadMoreBtn from './js/components/load-more-btn';
@@ -25,7 +26,7 @@ function onSearch(e) {
 
   imagesApiService.query = e.target.elements.query.value;
 
-  //TODO Поправить уловие проврки!!!
+  //TODO Поправить уcловие проврки!!!
 
   if (imagesApiService.query.trim() === '') {
     return alert('GG');
@@ -40,6 +41,7 @@ function fetchGallery() {
   loadMoreBtn.disable();
   imagesApiService.fetchImages().then(hits => {
     appendImagesMarkup(hits);
+    windowsScrolling();
     loadMoreBtn.enable();
   });
 }
@@ -51,3 +53,31 @@ function appendImagesMarkup(hits) {
 function clearImagesContainer() {
   refs.gallery.innerHTML = '';
 }
+
+function windowsScrolling() {
+  const totalScrollHeight = refs.gallery.clientHeight;
+
+  window.scrollTo({
+    top: totalScrollHeight,
+    left: 0,
+    behavior: 'smooth',
+  });
+}
+
+// //! Вариант скролла
+// function windowsScrolling2() {
+//   const scrollHeight = Math.max(
+//     document.body.scrollHeight,
+//     document.documentElement.scrollHeight,
+//     document.body.offsetHeight,
+//     document.documentElement.offsetHeight,
+//     document.body.clientHeight,
+//     document.documentElement.clientHeight,
+//   );
+
+//   window.scrollTo({
+//     top: scrollHeight,
+//     left: 0,
+//     behavior: 'smooth',
+//   });
+// }
