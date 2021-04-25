@@ -35,12 +35,14 @@ function onSearch(e) {
   imagesApiService.resetPage();
   clearImagesContainer();
   fetchGallery();
+  friconix_update();
 }
 
 function fetchGallery() {
   loadMoreBtn.disable();
   imagesApiService.fetchImages().then(hits => {
     appendImagesMarkup(hits);
+    friconix_update();
     windowsScrolling();
     loadMoreBtn.enable();
   });
