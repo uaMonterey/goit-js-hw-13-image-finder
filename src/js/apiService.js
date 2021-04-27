@@ -14,6 +14,9 @@ export default class ImagesApiService {
     )
       .then(response => response.json())
       .then(({ hits }) => {
+        if (hits.length === 0) {
+          return alert('error');
+        }
         this.incrementPage();
 
         return hits;
