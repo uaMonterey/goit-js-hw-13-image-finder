@@ -1,25 +1,23 @@
 {{#each this}}
 <li class="list-card">
-  <div class="photo-card">
-    <img src="{{webformatURL }}" alt="{{tags}}" />
-    <div class="stats">
-      <p class="stats-item">
-        <i class="fi-xwsuhl-thumb-solid" style=" color: green"></i>
-        {{likes}}
-      </p>
-      <p class="stats-item">
-        <i class="fi-xwluxl-eye-wide fi-size-xl" style=" color: green"></i>
-        {{views}}
-      </p>
-      <p class="stats-item">
-        <i class="fi-xwluxl-comment-dots-wide fi-size-xl" style=" color: green"></i>
-        {{comments}}
-      </p>
-      <p class="stats-item">
-        <i class="fi-xwsrxl-sign-in-solid fi-size-xl" style=" color: green"></i>
-        {{downloads}}
-      </p>
-    </div>
+  <img src={{webformatURL}} alt="{{tags}}" data-src={{largeImageUrl}} min-width="320" />
+  <div class="stats">
+    <p class="stats-item">
+      <i class="fi-xwsuhl-thumb-solid"></i>
+      {{likes}}
+    </p>
+    <p class="stats-item">
+      <i class="fi-xwluxl-eye-wide fi-size-xl"></i>
+      {{views}}
+    </p>
+    <p class="stats-item">
+      <i class="fi-xwluxl-comment-dots-wide fi-size-xl"></i>
+      {{comments}}
+    </p>
+    <p class="stats-item">
+      <i class="fi-xwsrxl-sign-in-solid fi-size-xl"></i>
+      {{downloads}}
+    </p>
 </li>
 </div>
 {{/each}}
