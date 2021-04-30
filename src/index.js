@@ -3,33 +3,35 @@ import './css/form.css';
 
 import imagesList from './templates/imagesList.hbs';
 import ImagesApiService from './js/apiService';
-
-import * as basicLightbox from 'basiclightbox';
+import onOpenModal from './js/components/openModal';
+import getRefs from './js/components/refs';
+import './js/components/scrollToTop';
 
 const refs = getRefs();
 
-const imagesApiService = new ImagesApiService();
+const API = new ImagesApiService();
 
 refs.searchQuery.addEventListener('submit', onSearch);
 refs.input.addEventListener('input', cleanInput);
+refs.gallery.addEventListener('click', onOpenModal);
 
 function onSearch(e) {
   e.preventDefault();
 
-  imagesApiService.query = e.target.elements.query.value;
+  API.query = e.target.elements.query.value;
 
-  if (imagesApiService.query.trim() === '') {
+  if (API.query.trim() === '') {
     return alert('GG');
   }
 
-  imagesApiService.resetPage();
+  API.resetPage();
   cleanImagesContainer();
   fetchGallery();
   friconix_update();
 }
 
 function fetchGallery() {
-  imagesApiService.fetchImages().then(hits => {
+  API.fetchImages().then(hits => {
     appendImagesMarkup(hits);
     friconix_update();
   });
@@ -53,22 +55,12 @@ function cleanInput(e) {
   }
 }
 
-function getRefs() {
-  return {
-    input: document.getElementById('searchQuery'),
-    searchQuery: document.querySelector('.form'),
-    gallery: document.querySelector('.gallery'),
-    target: document.querySelector('.target'),
-  };
-}
-
-// ----------------  Intersection Observer ----------------- //
-// ================ or infinty scroll ===================== //
+// ---- Intersection Observer ---- //
 
 const onEntry = entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      if (imagesApiService.query !== '') {
+      if (API.query !== '') {
         fetchGallery();
       }
     }
@@ -80,47 +72,3 @@ const options = {
 const observer = new IntersectionObserver(onEntry, options);
 
 observer.observe(refs.target);
-
-// scrollToTop
-const offset = 100;
-const scrollUp = document.querySelector('.scroll-up');
-const scrollUpSvgPath = document.querySelector('.scroll-up__svg-path');
-const pathLength = scrollUpSvgPath.getTotalLength();
-
-scrollUpSvgPath.style.strokeDasharray = `${pathLength} ${pathLength}`;
-scrollUpSvgPath.style.transition = 'stroke-dashoffset 20ms';
-
-const getTop = () => window.pageYOffset || document.documentElement.scrollTop;
-
-//updateDashoffset
-const updateDashoffset = () => {
-  const height = document.documentElement.scrollHeight - window.innerHeight;
-  const dashoffset = pathLength - (getTop() * pathLength) / height;
-  scrollUpSvgPath.style.strokeDashoffset = dashoffset;
-};
-
-//onScroll
-window.addEventListener('scroll', () => {
-  updateDashoffset();
-  if (getTop() > offset) {
-    scrollUp.classList.add('scroll-up--active');
-  } else {
-    scrollUp.classList.remove('scroll-up--active');
-  }
-});
-
-//click
-scrollUp.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
-});
-
-//-------------MODAL WINDOW----------//
-
-// const instance = basicLightbox.create(`
-//     <img src="${largeImageUrl}">
-// `);
-
-// instance.show();
