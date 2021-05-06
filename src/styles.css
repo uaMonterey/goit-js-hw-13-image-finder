@@ -9,9 +9,6 @@ html {
 }
 
 body {
-  /* background: url(./images/Searchs_130.jpg) no-repeat center center fixed; */
-  /* background: url(./images/5026563.jpg) no-repeat center center fixed; */
-
   /* background: radial-gradient(circle, #444857, #2c303a);
   background-image: radial-gradient(circle, rgb(68, 72, 87), rgb(44, 48, 58)); */
 
@@ -122,8 +119,6 @@ form > .button:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-
-  padding: 10px;
 }
 
 /* ----- Scroll-up ----- */

@@ -1,7 +1,10 @@
 import './styles.css';
 import './css/form.css';
 
+import { error } from '@pnotify/core';
+
 import imagesList from './templates/imagesList.hbs';
+
 import ImagesApiService from './js/apiService';
 import onOpenModal from './js/components/openModal';
 import getRefs from './js/components/refs';
@@ -21,7 +24,11 @@ function onSearch(e) {
   API.query = e.target.elements.query.value;
 
   if (API.query.trim() === '') {
-    return alert('GG');
+    return info({
+      title: 'Uh Oh!',
+      delay: 2000,
+      text: 'Too many matches found. Please enter a more specific query!',
+    });
   }
 
   API.resetPage();
